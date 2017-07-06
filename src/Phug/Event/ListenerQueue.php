@@ -4,13 +4,13 @@ namespace Phug\Event;
 
 class ListenerQueue extends \SplPriorityQueue
 {
-    public function compare($a, $b)
+    public function compare($priority, $priorityToCompare)
     {
-        if ($a === $b) {
+        if ($priority === $priorityToCompare) {
             return 0;
         }
 
-        return $a > $b ? -1 : 1;
+        return $priority > $priorityToCompare ? -1 : 1;
     }
 
     public function insert($value, $priority)

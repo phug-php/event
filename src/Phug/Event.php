@@ -7,7 +7,7 @@ class Event implements EventInterface
     private $name;
     private $target;
     private $params;
-    private $propagationStopped;
+    private $propagationStopped = false;
 
     /**
      * Event constructor.
