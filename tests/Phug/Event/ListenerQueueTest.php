@@ -62,7 +62,11 @@ class ListenerQueueTest extends \PHPUnit_Framework_TestCase
     public function testInsertWithNonCallback($parameterValue)
     {
 
-        self::expectException(\InvalidArgumentException::class);
+        if (method_exists(self::class, 'expectException')) {
+            self::expectException(\InvalidArgumentException::class);
+        } else {
+            self::setExpectedException(\InvalidArgumentException::class);
+        }
 
         $queue = new Event\ListenerQueue();
         $queue->insert('test', $parameterValue);
