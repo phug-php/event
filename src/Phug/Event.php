@@ -4,7 +4,6 @@ namespace Phug;
 
 class Event implements EventInterface
 {
-
     private $name;
     private $target;
     private $params;
@@ -12,6 +11,7 @@ class Event implements EventInterface
 
     /**
      * Event constructor.
+     *
      * @param $name
      * @param $target
      * @param $params
@@ -24,94 +24,90 @@ class Event implements EventInterface
     }
 
     /**
-     * Get event name
+     * Get event name.
      *
      * @return string
      */
     public function getName()
     {
-
         return $this->name;
     }
 
     /**
-     * Get target/context from which event was triggered
+     * Get target/context from which event was triggered.
      *
      * @return null|string|object
      */
     public function getTarget()
     {
-
         return $this->target;
     }
 
     /**
-     * Get parameters passed to the event
+     * Get parameters passed to the event.
      *
      * @return array
      */
     public function getParams()
     {
-
         return $this->params;
     }
 
     /**
-     * Get a single parameter by name
+     * Get a single parameter by name.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return mixed
      */
     public function getParam($name)
     {
-
         return $this->params[$name];
     }
 
     /**
-     * Set the event name
+     * Set the event name.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return void
      */
     public function setName($name)
     {
-
         $this->name = $name;
     }
 
     /**
-     * Set the event target
+     * Set the event target.
      *
-     * @param  null|string|object $target
+     * @param null|string|object $target
+     *
      * @return void
      */
     public function setTarget($target)
     {
-
         $this->target = $target;
     }
 
     /**
-     * Set event parameters
+     * Set event parameters.
      *
-     * @param  array $params
+     * @param array $params
+     *
      * @return void
      */
     public function setParams(array $params)
     {
-
         $this->params = $params;
     }
 
     /**
-     * Indicate whether or not to stop propagating this event
+     * Indicate whether or not to stop propagating this event.
      *
-     * @param  bool $flag
+     * @param bool $flag
      */
     public function stopPropagation($flag)
     {
-
         $this->propagationStopped = $flag;
     }
 
@@ -122,7 +118,6 @@ class Event implements EventInterface
      */
     public function isPropagationStopped()
     {
-
         return $this->propagationStopped;
     }
 }
