@@ -15,13 +15,11 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAttach()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
         $called = false;
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
         $mgr->attach('test.event', function (EventInterface $e) use (&$called) {
-
             $called = true;
         });
         $mgr->trigger('test.event');
@@ -35,21 +33,17 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testPriorityAttachInOrder()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
         $order = [];
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
         $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
-
             $order[] = 1;
         }, 10);
         $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
-
             $order[] = 2;
         }, 20);
         $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
-
             $order[] = 3;
         }, 30);
         $mgr->trigger('test.event');
@@ -63,21 +57,17 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testPriorityAttachInReversedOrder()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
         $order = [];
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
         $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
-
             $order[] = 3;
         }, 30);
         $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
-
             $order[] = 2;
         }, 20);
         $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
-
             $order[] = 1;
         }, 10);
         $mgr->trigger('test.event');
@@ -91,21 +81,17 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testPriorityAttachInMixedOrder()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
         $order = [];
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
         $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
-
             $order[] = 3;
         }, 30);
         $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
-
             $order[] = 1;
         }, 10);
         $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
-
             $order[] = 2;
         }, 20);
         $mgr->trigger('test.event');
@@ -120,14 +106,12 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDetach()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
 
         $called = false;
         $listener = function (EventInterface $e) use (&$called) {
-
             $called = true;
         };
         $mgr->attach('test.event', $listener);
@@ -147,14 +131,12 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIfDetachTouchesOtherEvents()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
 
         $called = false;
         $listener = function (EventInterface $e) use (&$called) {
-
             $called = true;
         };
         $mgr->attach('test.event', $listener);
@@ -174,21 +156,17 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testClearListeners()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
         $calls = 0;
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
         $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
-
             $calls++;
         });
         $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
-
             $calls++;
         });
         $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
-
             $calls++;
         });
         $mgr->trigger('test.event');
@@ -209,21 +187,17 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIfClearListenersTouchesOtherEvents()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
         $calls = 0;
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
         $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
-
             $calls++;
         });
         $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
-
             $calls++;
         });
         $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
-
             $calls++;
         });
         $mgr->trigger('test.event');
@@ -243,14 +217,12 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMultipleTriggerCallsOnSameEvent()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
 
         $called = false;
         $listener = function (EventInterface $e) use (&$called) {
-
             $called = true;
         };
         $mgr->attach('test.event', $listener);
@@ -272,21 +244,17 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMultipleTriggerCallsOnSameEventWithMultipleListeners()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
         $calls = 0;
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
         $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
-
             $calls++;
         });
         $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
-
             $calls++;
         });
         $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
-
             $calls++;
         });
 
@@ -308,20 +276,16 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDifferentEventListenersWithReturnValue()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
         $mgr->attach('test.first_event', function (EventInterface $e) {
-
             return 'first_event';
         });
         $mgr->attach('test.second_event', function (EventInterface $e) {
-
             return 'second_event';
         });
         $mgr->attach('test.third_event', function (EventInterface $e) {
-
             return 'third_event';
         });
 
@@ -337,22 +301,18 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testPropagationStop()
     {
-
         require_once __DIR__.'/MockEventManager.php';
 
-        $mgr = new MockEventManager;
+        $mgr = new MockEventManager();
         $mgr->attach('test.event', function (EventInterface $e) {
-
             return 'first';
         });
         $mgr->attach('test.event', function (EventInterface $e) {
-
             $e->stopPropagation(true);
 
             return 'second';
         });
         $mgr->attach('test.event', function (EventInterface $e) {
-
             return 'third';
         });
 
