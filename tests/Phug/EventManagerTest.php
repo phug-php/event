@@ -149,7 +149,6 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
 
         self::assertSame(3, $calls, '3 different listeners have been called');
 
-
         $calls = 0;
         $mgr->detach('test.event', $listenerToDetach);
         $mgr->trigger('test.event');

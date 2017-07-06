@@ -16,7 +16,6 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSetName()
     {
-
         $e = new Event('test.event');
 
         self::assertSame('test.event', $e->getName(), 'get name');
@@ -33,7 +32,6 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSetTarget()
     {
-
         $e = new Event('test.event');
         self::assertNull($e->getTarget(), 'target is null when not passed');
 
@@ -56,7 +54,6 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSetParams()
     {
-
         $e = new Event('test.event');
         self::assertInternalType('array', $e->getParams());
         self::assertCount(0, $e->getParams(), 'params are empty when not passed');
@@ -81,7 +78,6 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testStopPropagation()
     {
-
         $e = new Event('test.event');
 
         self::assertFalse($e->isPropagationStopped(), 'propagation isnt stopped after construct');

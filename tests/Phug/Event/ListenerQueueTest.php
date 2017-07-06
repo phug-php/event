@@ -9,13 +9,11 @@ use Phug\Event;
  */
 class ListenerQueueTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @covers ::compare
      */
     public function testCompare()
     {
-
         $queue = new Event\ListenerQueue();
 
         self::assertSame(0, $queue->compare(5, 5), '0 if same value');
@@ -28,7 +26,6 @@ class ListenerQueueTest extends \PHPUnit_Framework_TestCase
      */
     public function testInsert()
     {
-
         $queue = new Event\ListenerQueue();
 
         self::assertCount(0, $queue, 'count is 0 after construct');
@@ -42,7 +39,6 @@ class ListenerQueueTest extends \PHPUnit_Framework_TestCase
 
     public function provideParameterValues()
     {
-
         return [
             [null],
             [false],
@@ -51,7 +47,7 @@ class ListenerQueueTest extends \PHPUnit_Framework_TestCase
             [2.4],
             ['test'],
             [new \stdClass()],
-            [[1, 2, 3]]
+            [[1, 2, 3]],
         ];
     }
 
@@ -61,7 +57,6 @@ class ListenerQueueTest extends \PHPUnit_Framework_TestCase
      */
     public function testInsertWithNonCallback($parameterValue)
     {
-
         if (method_exists(self::class, 'expectException')) {
             self::expectException(\InvalidArgumentException::class);
         } else {
