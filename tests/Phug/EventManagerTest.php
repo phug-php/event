@@ -2,6 +2,7 @@
 
 namespace Phug\Test;
 
+use Phug\Event;
 use Phug\EventInterface;
 
 /**
@@ -122,6 +123,38 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
         $mgr->detach('test.event', $listener);
         $mgr->trigger('test.event');
         self::assertFalse($called, 'event listener was not called after detach');
+    }
+
+    /**
+     * @covers ::attach
+     * @covers ::detach
+     * @covers ::trigger
+     */
+    public function testDetachWithMultipleListeners()
+    {
+        require_once __DIR__.'/MockEventManager.php';
+
+        $calls = 0;
+        $mgr = new MockEventManager();
+        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+            $calls++;
+        });
+        $mgr->attach('test.event', $listenerToDetach = function (EventInterface $e) use (&$calls) {
+            $calls++;
+        });
+        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+            $calls++;
+        });
+        $mgr->trigger('test.event');
+
+        self::assertSame(3, $calls, '3 different listeners have been called');
+
+
+        $calls = 0;
+        $mgr->detach('test.event', $listenerToDetach);
+        $mgr->trigger('test.event');
+
+        self::assertSame(2, $calls, '2 listeners have been called after detach');
     }
 
     /**
@@ -317,5 +350,29 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
         });
 
         self::assertSame('second', $mgr->trigger('test.event'), 'event return value');
+    }
+
+    /**
+     * @covers ::attach
+     * @covers ::trigger
+     */
+    public function testTriggerWithEventInstance()
+    {
+        require_once __DIR__.'/MockEventManager.php';
+
+        $calls = 0;
+        $mgr = new MockEventManager();
+        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+            $calls++;
+        });
+        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+            $calls++;
+        });
+        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+            $calls++;
+        });
+
+        $mgr->trigger(new Event('test.event'));
+        self::assertSame(3, $calls, '3 different listeners have been called');
     }
 }
