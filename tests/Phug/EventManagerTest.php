@@ -20,7 +20,7 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
 
         $called = false;
         $mgr = new MockEventManager();
-        $mgr->attach('test.event', function (EventInterface $e) use (&$called) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$called) {
             $called = true;
         });
         $mgr->trigger('test.event');
@@ -38,13 +38,13 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
 
         $order = [];
         $mgr = new MockEventManager();
-        $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$order) {
             $order[] = 1;
         }, 10);
-        $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$order) {
             $order[] = 2;
         }, 20);
-        $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$order) {
             $order[] = 3;
         }, 30);
         $mgr->trigger('test.event');
@@ -62,13 +62,13 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
 
         $order = [];
         $mgr = new MockEventManager();
-        $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$order) {
             $order[] = 3;
         }, 30);
-        $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$order) {
             $order[] = 2;
         }, 20);
-        $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$order) {
             $order[] = 1;
         }, 10);
         $mgr->trigger('test.event');
@@ -86,13 +86,13 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
 
         $order = [];
         $mgr = new MockEventManager();
-        $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$order) {
             $order[] = 3;
         }, 30);
-        $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$order) {
             $order[] = 1;
         }, 10);
-        $mgr->attach('test.event', function (EventInterface $e) use (&$order) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$order) {
             $order[] = 2;
         }, 20);
         $mgr->trigger('test.event');
@@ -112,7 +112,7 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
         $mgr = new MockEventManager();
 
         $called = false;
-        $listener = function (EventInterface $e) use (&$called) {
+        $listener = function (EventInterface $event) use (&$called) {
             $called = true;
         };
         $mgr->attach('test.event', $listener);
@@ -136,13 +136,13 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
 
         $calls = 0;
         $mgr = new MockEventManager();
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
-        $mgr->attach('test.event', $listenerToDetach = function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', $listenerToDetach = function (EventInterface $event) use (&$calls) {
             $calls++;
         });
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
         $mgr->trigger('test.event');
@@ -168,7 +168,7 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
         $mgr = new MockEventManager();
 
         $called = false;
-        $listener = function (EventInterface $e) use (&$called) {
+        $listener = function (EventInterface $event) use (&$called) {
             $called = true;
         };
         $mgr->attach('test.event', $listener);
@@ -192,13 +192,13 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
 
         $calls = 0;
         $mgr = new MockEventManager();
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
         $mgr->trigger('test.event');
@@ -223,13 +223,13 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
 
         $calls = 0;
         $mgr = new MockEventManager();
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
         $mgr->trigger('test.event');
@@ -254,7 +254,7 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
         $mgr = new MockEventManager();
 
         $called = false;
-        $listener = function (EventInterface $e) use (&$called) {
+        $listener = function (EventInterface $event) use (&$called) {
             $called = true;
         };
         $mgr->attach('test.event', $listener);
@@ -280,13 +280,13 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
 
         $calls = 0;
         $mgr = new MockEventManager();
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
 
@@ -311,13 +311,13 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
         require_once __DIR__.'/MockEventManager.php';
 
         $mgr = new MockEventManager();
-        $mgr->attach('test.first_event', function (EventInterface $e) {
+        $mgr->attach('test.first_event', function (EventInterface $event) {
             return 'first_event';
         });
-        $mgr->attach('test.second_event', function (EventInterface $e) {
+        $mgr->attach('test.second_event', function (EventInterface $event) {
             return 'second_event';
         });
-        $mgr->attach('test.third_event', function (EventInterface $e) {
+        $mgr->attach('test.third_event', function (EventInterface $event) {
             return 'third_event';
         });
 
@@ -336,15 +336,15 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
         require_once __DIR__.'/MockEventManager.php';
 
         $mgr = new MockEventManager();
-        $mgr->attach('test.event', function (EventInterface $e) {
+        $mgr->attach('test.event', function (EventInterface $event) {
             return 'first';
         });
-        $mgr->attach('test.event', function (EventInterface $e) {
-            $e->stopPropagation(true);
+        $mgr->attach('test.event', function (EventInterface $event) {
+            $event->stopPropagation(true);
 
             return 'second';
         });
-        $mgr->attach('test.event', function (EventInterface $e) {
+        $mgr->attach('test.event', function (EventInterface $event) {
             return 'third';
         });
 
@@ -361,13 +361,13 @@ class EventManagerTest extends \PHPUnit_Framework_TestCase
 
         $calls = 0;
         $mgr = new MockEventManager();
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
-        $mgr->attach('test.event', function (EventInterface $e) use (&$calls) {
+        $mgr->attach('test.event', function (EventInterface $event) use (&$calls) {
             $calls++;
         });
 

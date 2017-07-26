@@ -16,13 +16,13 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSetName()
     {
-        $e = new Event('test.event');
+        $event = new Event('test.event');
 
-        self::assertSame('test.event', $e->getName(), 'get name');
+        self::assertSame('test.event', $event->getName(), 'get name');
 
-        $e->setName('other.event');
+        $event->setName('other.event');
 
-        self::assertSame('other.event', $e->getName(), 'get name after set');
+        self::assertSame('other.event', $event->getName(), 'get name after set');
     }
 
     /**
@@ -32,18 +32,18 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSetTarget()
     {
-        $e = new Event('test.event');
-        self::assertNull($e->getTarget(), 'target is null when not passed');
+        $event = new Event('test.event');
+        self::assertNull($event->getTarget(), 'target is null when not passed');
 
         $target = new \stdClass();
-        $e = new Event('test.event', $target);
+        $event = new Event('test.event', $target);
 
-        self::assertSame($target, $e->getTarget(), 'get target');
+        self::assertSame($target, $event->getTarget(), 'get target');
 
         $otherTarget = new \stdClass();
-        $e->setTarget($otherTarget);
+        $event->setTarget($otherTarget);
 
-        self::assertSame($otherTarget, $e->getTarget(), 'get target after set');
+        self::assertSame($otherTarget, $event->getTarget(), 'get target after set');
     }
 
     /**
@@ -54,21 +54,21 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSetParams()
     {
-        $e = new Event('test.event');
-        self::assertInternalType('array', $e->getParams());
-        self::assertCount(0, $e->getParams(), 'params are empty when not passed');
+        $event = new Event('test.event');
+        self::assertInternalType('array', $event->getParams());
+        self::assertCount(0, $event->getParams(), 'params are empty when not passed');
 
         $params = ['test_key' => 'test value'];
-        $e = new Event('test.event', null, $params);
+        $event = new Event('test.event', null, $params);
 
-        self::assertSame(['test_key' => 'test value'], $e->getParams(), 'get params');
-        self::assertSame('test value', $e->getParam('test_key'), 'get single param');
+        self::assertSame(['test_key' => 'test value'], $event->getParams(), 'get params');
+        self::assertSame('test value', $event->getParam('test_key'), 'get single param');
 
         $otherParams = ['other_test_key' => 'other test value'];
-        $e->setParams($otherParams);
+        $event->setParams($otherParams);
 
-        self::assertSame(['other_test_key' => 'other test value'], $e->getParams(), 'get params after set');
-        self::assertSame('other test value', $e->getParam('other_test_key'), 'get single param after set');
+        self::assertSame(['other_test_key' => 'other test value'], $event->getParams(), 'get params after set');
+        self::assertSame('other test value', $event->getParam('other_test_key'), 'get single param after set');
     }
 
     /**
@@ -78,16 +78,16 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testStopPropagation()
     {
-        $e = new Event('test.event');
+        $event = new Event('test.event');
 
-        self::assertFalse($e->isPropagationStopped(), 'propagation isnt stopped after construct');
+        self::assertFalse($event->isPropagationStopped(), 'propagation isnt stopped after construct');
 
-        $e->stopPropagation(true);
+        $event->stopPropagation(true);
 
-        self::assertTrue($e->isPropagationStopped(), 'propagation is stopped after set');
+        self::assertTrue($event->isPropagationStopped(), 'propagation is stopped after set');
 
-        $e->stopPropagation(false);
+        $event->stopPropagation(false);
 
-        self::assertFalse($e->isPropagationStopped(), 'propagation isnt stopped after second set');
+        self::assertFalse($event->isPropagationStopped(), 'propagation isnt stopped after second set');
     }
 }
