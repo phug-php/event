@@ -15,26 +15,37 @@ class ListenerQueue extends \SplPriorityQueue
 
     public function insert($value, $priority)
     {
-        if (is_array($value)) {
-            if ($value === []) {
-                return;
-            }
-
-            reset($value);
-            if (is_int(key($value))) {
-                foreach ($value as $key => $callback) {
-                    $this->insert($callback, $priority);
-                }
-
-                return;
-            }
-        }
         if (!is_callable($value)) {
+            $previous = null;
+            try {
+                if (is_array($value) || $value instanceof \Traversable) {
+                    return $this->insertMultiple($value, $priority);
+                }
+            } catch (\InvalidArgumentException $multipleInsertException) {
+                $previous = $multipleInsertException;
+            }
+
             throw new \InvalidArgumentException(
-                'Callback inserted into ListenerQueue needs to be callable'
+                'Callback inserted into ListenerQueue needs to be callable',
+                1,
+                $previous
             );
         }
 
         parent::insert($value, $priority);
+    }
+
+    public function insertMultiple($value, $priority)
+    {
+        if (!is_array($value) && !($value instanceof \Traversable)) {
+            throw new \InvalidArgumentException(
+                'insertMultiple only accept array or Traversable as first argument',
+                2
+            );
+        }
+
+        foreach ($value as $callback) {
+            $this->insert($callback, $priority);
+        }
     }
 }

@@ -48,6 +48,48 @@ class ListenerQueueTest extends \PHPUnit_Framework_TestCase
         }, function () {
         }], 10);
         self::assertCount(2, $queue, 'count is 2 after double insert');
+
+        $date = new \DateTime();
+        $queue->insert([$date, 'format'], 10);
+        self::assertCount(3, $queue, 'count is 3 after callable array insert');
+    }
+
+    /**
+     * @covers                   ::insertMultiple
+     * @expectedException        \InvalidArgumentException
+     * @expectedExceptionMessage insertMultiple only accept array or Traversable as first argument
+     */
+    public function testInsertMultipleBadType()
+    {
+        $queue = new Event\ListenerQueue();
+
+        $queue->insertMultiple(function () {
+        }, 10);
+    }
+
+    /**
+     * @covers                   ::insertMultiple
+     * @expectedException        \InvalidArgumentException
+     * @expectedExceptionMessage Callback inserted into ListenerQueue needs to be callable
+     */
+    public function testInsertMultipleBadSubInsert()
+    {
+        $queue = new Event\ListenerQueue();
+
+        $queue->insert([new \DateTime(), 'doesNotExist'], 10);
+    }
+
+    /**
+     * @covers ::insertMultiple
+     */
+    public function testInsertMultiple()
+    {
+        $queue = new Event\ListenerQueue();
+
+        $queue->insertMultiple([function () {
+        }, function () {
+        }], 10);
+        self::assertCount(2, $queue, 'count is 2 after double insert');
     }
 
     public function provideParameterValues()
@@ -61,6 +103,7 @@ class ListenerQueueTest extends \PHPUnit_Framework_TestCase
             ['test'],
             [new \stdClass()],
             [[1, 2, 3]],
+            [[new \DateTime(), 'doesNotExist']],
         ];
     }
 
@@ -77,6 +120,6 @@ class ListenerQueueTest extends \PHPUnit_Framework_TestCase
         }
 
         $queue = new Event\ListenerQueue();
-        $queue->insert('test', $parameterValue);
+        $queue->insert($parameterValue, 0);
     }
 }
