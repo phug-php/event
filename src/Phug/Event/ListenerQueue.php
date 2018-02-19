@@ -17,6 +17,7 @@ class ListenerQueue extends \SplPriorityQueue
     {
         if (!is_callable($value)) {
             $previous = null;
+
             try {
                 if (is_array($value) || $value instanceof \Traversable) {
                     return $this->insertMultiple($value, $priority);
