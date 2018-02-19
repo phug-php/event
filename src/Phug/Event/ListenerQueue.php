@@ -15,6 +15,20 @@ class ListenerQueue extends \SplPriorityQueue
 
     public function insert($value, $priority)
     {
+        if (is_array($value)) {
+            if ($value === []) {
+                return;
+            }
+
+            reset($value);
+            if (is_int(key($value))) {
+                foreach ($value as $key => $callback) {
+                    $this->insert($callback, $priority);
+                }
+
+                return;
+            }
+        }
         if (!is_callable($value)) {
             throw new \InvalidArgumentException(
                 'Callback inserted into ListenerQueue needs to be callable'

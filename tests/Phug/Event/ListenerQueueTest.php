@@ -35,6 +35,19 @@ class ListenerQueueTest extends \PHPUnit_Framework_TestCase
         $queue->insert(function () {
         }, 10);
         self::assertCount(2, $queue, 'count is 2 after second insert');
+        $queue->insert([], 10);
+        self::assertCount(2, $queue, 'count is still 2 after empty insert');
+        $queue->insert([function () {
+        }, function () {
+        }], 10);
+        self::assertCount(4, $queue, 'count is 4 after double insert');
+
+        $queue = new Event\ListenerQueue();
+
+        $queue->insert([function () {
+        }, function () {
+        }], 10);
+        self::assertCount(2, $queue, 'count is 2 after double insert');
     }
 
     public function provideParameterValues()
