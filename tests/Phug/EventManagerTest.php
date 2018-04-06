@@ -2,13 +2,14 @@
 
 namespace Phug\Test;
 
+use PHPUnit\Framework\TestCase;
 use Phug\Event;
 use Phug\EventInterface;
 
 /**
  * @coversDefaultClass \Phug\EventManagerTrait
  */
-class EventManagerTest extends \PHPUnit_Framework_TestCase
+class EventManagerTest extends TestCase
 {
     /**
      * @covers ::attach

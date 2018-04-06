@@ -2,12 +2,13 @@
 
 namespace Phug\Test;
 
+use PHPUnit\Framework\TestCase;
 use Phug\Event;
 
 /**
  * @coversDefaultClass \Phug\Event
  */
-class EventTest extends \PHPUnit_Framework_TestCase
+class EventTest extends TestCase
 {
     /**
      * @covers ::__construct
