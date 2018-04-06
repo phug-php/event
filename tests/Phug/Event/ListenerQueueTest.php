@@ -2,12 +2,13 @@
 
 namespace Phug\Test\Event;
 
+use PHPUnit\Framework\TestCase;
 use Phug\Event;
 
 /**
  * @coversDefaultClass \Phug\Event\ListenerQueue
  */
-class ListenerQueueTest extends \PHPUnit_Framework_TestCase
+class ListenerQueueTest extends TestCase
 {
     /**
      * @covers ::compare
