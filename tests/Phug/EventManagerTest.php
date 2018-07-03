@@ -375,4 +375,48 @@ class EventManagerTest extends TestCase
         $mgr->trigger(new Event('test.event'));
         self::assertSame(3, $calls, '3 different listeners have been called');
     }
+
+    /**
+     * @covers ::getEventListeners
+     * @covers ::mergeEventListeners
+     */
+    public function testMerge()
+    {
+        require_once __DIR__.'/MockEventManager.php';
+
+        $m1 = new MockEventManager();
+        $m2 = new MockEventManager();
+        $a = 'decbin';
+        $b1 = 'strpos';
+        $b2 = 'array_values';
+        $b3 = 'explode';
+        $c = 'implode';
+        $m1->attach('a', $a);
+        $m1->attach('b', $b1, 1);
+        $m1->attach('b', $b2);
+        $m2->attach('b', $b2, 2);
+        $m2->attach('b', $b3);
+        $m2->attach('c', $c);
+
+        self::assertSame([
+            'b' => [$b3, $b2],
+            'c' => [$c],
+        ], $m2->dumpListeners());
+        self::assertSame([
+            'a' => [$a],
+            'b' => [$b2, $b1],
+        ], $m1->dumpListeners());
+
+        $m2->mergeEventListeners($m1);
+
+        self::assertSame([
+            'a' => [$a],
+            'b' => [$b2, $b1],
+        ], $m1->dumpListeners());
+        self::assertSame([
+            'b' => [$b3, $b1, $b2],
+            'c' => [$c],
+            'a' => [$a],
+        ], $m2->dumpListeners());
+    }
 }
