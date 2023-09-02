@@ -50,7 +50,7 @@ trait EventManagerTrait
             $listeners->setExtractFlags(ListenerQueue::EXTR_BOTH);
 
             foreach ($listeners as $listener) {
-                if (!in_array($listener['data'], $queue, true)) {
+                if (!in_array($listener['data'], $queue)) {
                     $this->attach($eventName, $listener['data'], $listener['priority']);
                 }
             }
